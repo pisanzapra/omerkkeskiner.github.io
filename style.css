@@ -1,0 +1,458 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Impact', 'Arial Black', sans-serif;
+}
+
+body {
+  background-color: #1a0508;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1.5px);
+  background-size: 14px 14px;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: #fff;
+  transition: background-color 0.5s ease;
+}
+
+/* --- Müzik Arayüzü --- */
+.music-player-ui {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 100;
+}
+
+.audio-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  z-index: 100;
+}
+
+.audio-toggle:hover {
+  transform: scale(1.1);
+}
+
+.track-info {
+  position: fixed;
+  top: 20px;
+  right: 80px; /* Butonun solunda durması için */
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  box-shadow: 4px 4px 0px #e60012;
+  white-space: nowrap;
+  z-index: 100;
+}
+
+/* --- Ekran Yönetimi --- */
+.screen {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* --- ANA MENÜ --- */
+#screen-main.active {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 40px;
+  padding: 40px 5%;
+}
+
+.main-menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.main-menu-item {
+  background-color: #000;
+  color: #fff;
+  border: 3px solid #fff;
+  padding: 16px 55px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  box-shadow: 6px 6px 0px #e60012;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.main-menu-item:hover {
+  background-color: #fff;
+  color: #000;
+  border-color: #000;
+  box-shadow: -6px 6px 0px #e60012;
+  transform: scale(1.06) translateX(8px);
+}
+
+/* --- GET TO KNOW ME ekranı --- */
+#screen-gtk.active {
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 40px 5%;
+}
+
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 20;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 8px 18px;
+  font-size: 1rem;
+}
+
+.back-btn:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* --- SUBSCRIPTION & QUIT ekranları --- */
+#screen-subscription.active, #screen-quit.active {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 5%;
+}
+
+.subscription-box, .quit-box {
+  max-width: 560px;
+  border: 4px solid #fff;
+  padding: 40px;
+  background-color: #141014;
+  box-shadow: 10px 10px 0px #e60012;
+}
+
+.subscription-box h2, .quit-box h2 {
+  font-family: 'Impact', sans-serif;
+  font-size: 2.2rem;
+  color: #e60012;
+  margin-bottom: 20px;
+}
+
+/* Yazı fontu düzeltmesi eklendi */
+.subscription-box p, .quit-box p {
+  line-height: 1.6;
+  font-family: 'Impact', sans-serif;
+  font-size: 1.1rem;
+}
+
+.fake-subscribe-btn {
+  margin-top: 22px;
+  padding: 12px 32px;
+  background-color: #e60012;
+  color: #fff;
+  border: none;
+  font-size: 1.05rem;
+  font-family: 'Impact', sans-serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.fake-subscribe-btn:hover {
+  background-color: #fff;
+  color: #e60012;
+}
+
+.exes-note {
+  margin-top: 24px;
+  font-style: italic;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.quit-buttons {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  margin-top: 26px;
+}
+
+.quit-buttons button {
+  padding: 10px 26px;
+  border: 2px solid #fff;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.15s ease;
+}
+
+.quit-buttons button:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Troll "Yes, Quit" Butonu */
+.btn-troll-yes {
+  transition: opacity 0.2s ease, transform 0.2s ease !important;
+}
+
+/* --- Avatar & Etkileşimli Menü --- */
+.persona-container {
+  position: relative; 
+  display: flex;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  gap: 50px;
+  padding-left: 360px; /* Menünün sağdaki yazılara binmemesi için boşluk */
+  z-index: 2;
+}
+
+/* Sol alt sabit menü alanı */
+.menu-container {
+  position: fixed; 
+  bottom: 0;
+  left: 0;
+  width: 380px;
+  height: 380px;
+  z-index: 100;
+}
+
+/* ÇİÇEĞİN MERKEZİ: Avatar */
+.avatar-img {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  max-width: 220px; 
+  max-height: 220px;
+  object-fit: contain;
+  z-index: 20; /* Yaprakların (menünün) üstünde durması için yüksek z-index */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none; /* Fare etkileşimlerinin altındaki menü kutusuna geçmesine izin verir */
+}
+
+/* Üzerine gelince avatar kalp atışı gibi hafif büyüsün */
+.menu-container:hover .avatar-img {
+  transform: scale(1.05);
+}
+
+/* YAPRAKLARIN MERKEZ NOKTASI */
+.persona-menu {
+  position: absolute;
+  bottom: 130px; /* Avatarın tam orta noktasına denk gelecek şekilde ayarlandı */
+  left: 130px;
+  width: 0;
+  height: 0;
+  z-index: 10; /* Avatarın altında (arkasında) kalması için z-index düşük */
+}
+
+/* YAPRAKLAR (Menü İtemları) */
+.menu-item {
+  --angle: 0deg;
+  --radius: 20px; /* Başlangıçta dar, avatarın arkasında saklı dururlar */
+  position: absolute;
+  left: 0;
+  bottom: -30px; /* 60px olan buton yüksekliğinin tam yarısı (merkeze hizalamak için) */
+  width: 225px;
+  height: 60px;
+  background-color: #000;
+  color: #fff;
+  border: 3px solid #fff;
+  padding: 0 22px;
+  font-size: 1.55rem;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+  transform-origin: 0% 50%; /* Yaprağın sol ortasından (dibinden) dışarı doğru dönsün */
+  transform: rotate(var(--angle)) translateX(var(--radius));
+  box-shadow: 6px 6px 0px #e60012;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Yelpaze açıları (0'dan -105'e doğru bir çeyrek daire oluşturacak şekilde) */
+.persona-menu .menu-item:nth-child(1) { --angle: -5deg; }
+.persona-menu .menu-item:nth-child(2) { --angle: -25deg; }
+.persona-menu .menu-item:nth-child(3) { --angle: -45deg; }
+.persona-menu .menu-item:nth-child(4) { --angle: -65deg; }
+.persona-menu .menu-item:nth-child(5) { --angle: -85deg; }
+.persona-menu .menu-item:nth-child(6) { --angle: -105deg; }
+
+/* HOVER OLUNCA: Çiçek Açıyor (Yapraklar dışarı fırlasın) */
+.menu-container:hover .menu-item {
+  opacity: 1;
+  visibility: visible;
+  --radius: 135px; /* Avatarın sınırlarının dışına fırlamaları için yarıçap genişletildi */
+  transform: rotate(var(--angle)) translateX(var(--radius));
+}
+
+/* BUTONA HOVER OLUNCA: Seçilen yaprağın ekstra uzaması ve öne çıkması */
+.menu-item:hover {
+  background-color: #fff;
+  color: #000;
+  border-color: #000;
+  --radius: 150px; /* Seçilen buton biraz daha fırlasın */
+  transform: rotate(var(--angle)) translateX(var(--radius)) scaleX(1.1) scaleY(1.1);
+  box-shadow: -6px 6px 0px #e60012;
+  z-index: 30; /* Persona stili: Seçili yaprak avatarı ezip en üste çıksın */
+}
+
+/* --- Sağ Bilgi Kutusu --- */
+.content-panel {
+  flex: 1;
+  border: 4px solid #fff;
+  transform: skewX(-5deg);
+  box-shadow: 10px 10px 0px #e60012;
+  min-height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.section-content {
+  display: none;
+  font-family: Arial, sans-serif;
+  padding: 30px;
+  min-height: 400px;
+  box-sizing: border-box;
+  background-color: #111;
+}
+
+.section-content.active {
+  display: block;
+}
+
+/* Stats Logolarını Büyütme */
+.stats-logos {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.stats-logos .uni-logo {
+  height: 75px !important; 
+  width: auto;
+  filter: drop-shadow(2px 2px 0px #e60012);
+}
+
+.logo-badge { display: none; }
+
+.section-content h2 {
+  font-family: 'Impact', sans-serif;
+  font-size: 2.5rem;
+  color: #e60012;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #fff;
+}
+
+.section-content h3, .section-content h4 {
+  margin-top: 15px;
+  color: #fff;
+}
+
+.section-content p {
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.skills-list {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.skills-list li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+hr {
+  margin: 15px 0;
+  border-color: #333;
+}
+
+.stats-header {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+/* Stats içindeki profil fotoğrafının boyutunu sabitleme */
+.stats-header .portrait {
+  width: 130px !important;
+  height: 130px !important;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 6px 6px 0px #e60012;
+  flex-shrink: 0;
+}
+
+.project-card {
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #333;
+}
+
+.project-card:last-child {
+  border-bottom: none;
+}
+
+.project-card h4 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 15px;
+  flex-wrap: wrap;
+  color: #fff;
+  font-size: 1.15rem;
+}
+
+.project-card .date {
+  color: #e60012;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.project-card .org {
+  color: #bbb;
+  font-style: italic;
+  margin-top: 3px;
+}
+
+#system a {
+  color: #e60012;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#system a:hover {
+  text-decoration: underline;
+}

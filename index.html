@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ömer Kaan Keskiner | CV & Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="track-info" class="track-info"></div>
+  <button id="audio-toggle" class="audio-toggle" onclick="toggleAudio()" aria-label="Müziği aç/kapat">🔇</button>
+  <audio id="bgm" loop></audio>
+
+  <!-- ANA MENÜ -->
+  <div id="screen-main" class="screen active">
+    <div class="main-menu-stage">
+      <div class="main-menu-buttons">
+        <button class="main-menu-item" onclick="showScreen('gtk')">GET TO KNOW ME</button>
+        <button class="main-menu-item" onclick="showScreen('subscription')">SUBSCRIPTION</button>
+        <button class="main-menu-item" onclick="showScreen('quit')">QUIT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GET TO KNOW ME -->
+  <div id="screen-gtk" class="screen">
+    <button class="back-btn" onclick="showScreen('main')">◀ MENU</button>
+    
+    <!-- Sol Alt Avatar ve Etkileşimli Menü (Artık CSS ile Ekrana Sabit) -->
+    <div class="menu-container">
+      <img src="freehand-crop.png" alt="Avatar" class="avatar-img">
+      <nav class="persona-menu">
+        <button class="menu-item" onclick="showSection('stats')"><span class="text">STATS</span></button>
+        <button class="menu-item" onclick="showSection('work')"><span class="text">WORK</span></button>
+        <button class="menu-item" onclick="showSection('edu')"><span class="text">EDU</span></button>
+        <button class="menu-item" onclick="showSection('equip')"><span class="text">EQUIP</span></button>
+        <button class="menu-item" onclick="showSection('quests')"><span class="text">QUESTS</span></button>
+        <button class="menu-item" onclick="showSection('system')"><span class="text">SYSTEM</span></button>
+      </nav>
+    </div>
+
+    <div class="persona-container">
+      <!-- Sağ Detay Paneli -->
+      <div id="content-panel" class="content-panel">
+
+        <!-- STATS / ABOUT -->
+        <div id="stats" class="section-content active">
+          <div class="stats-logos">
+            <img class="uni-logo" src="itu-logo.png" alt="İTÜ logo">
+            <img class="uni-logo" src="izunar-logo.png" alt="İZÜ NAR logo">
+          </div>
+          <div class="stats-header">
+            <img class="portrait" src="profile.jpg" alt="Ömer Kaan Keskiner">
+            <div>
+              <h2>CHARACTER STATS</h2>
+              <p><strong>Name:</strong> Ömer Kaan Keskiner</p>
+              <p><strong>Role:</strong> Guest Researcher @ İZÜ NAR</p>
+              <p><strong>Class:</strong> M.Sc. Student, Nuclear Energy Engineering</p>
+            </div>
+          </div>
+          <hr>
+          <h3>SKILLS</h3>
+          <ul class="skills-list">
+            <li><strong>Electronics:</strong> KiCad schematic &amp; PCB design, detector electronics, analog/digital circuit design, soldering</li>
+            <li><strong>Instrumentation:</strong> LVDS window-comparator &amp; Time-over-Threshold (ToT) discriminator design for radiation detectors</li>
+            <li><strong>Programming:</strong> C, C++, MATLAB, LaTeX, Linux</li>
+            <li><strong>Scientific Tools:</strong> ROOT, Geant4, Qiskit fundamentals</li>
+            <li><strong>Prototyping:</strong> Robotics, 3D printing, electronics integration</li>
+            <li><strong>Languages:</strong> Turkish (native), English (full professional), German (limited working)</li>
+          </ul>
+        </div>
+
+        <!-- WORK / EMPLOYMENT HISTORY -->
+        <div id="work" class="section-content">
+          <h2>EMPLOYMENT HISTORY</h2>
+          <div class="project-card">
+            <h4>Guest Researcher <span class="date">Jul 2026-Present</span></h4>
+            <p class="org">İZÜ NAR - Nuclear Detectors and Robotics Research Center, Küçükçekmece, Istanbul</p>
+            <p>Conducting M.Sc. thesis research while contributing to nuclear and particle-physics projects.</p>
+          </div>
+          <div class="project-card">
+            <h4>Part-Time Student Researcher <span class="date">Feb 2024-Jul 2026</span></h4>
+            <p class="org">İZÜ NAR, Istanbul</p>
+            <p>Worked at the intersection of nuclear electronics, particle physics, and robotics. Designed KiCad schematics and PCBs, fabricated boards, and used MATLAB simulations to turn concepts into prototypes. Designed and implemented LVDS-based window-comparator and ToT discriminator PCBs for radiation detectors. Contributed to robotics design, 3D printing, electronics integration, and lab management.</p>
+          </div>
+          <div class="project-card">
+            <h4>Volunteer Intern <span class="date">Jul 2023-Feb 2024</span></h4>
+            <p class="org">İZÜ NAR, Istanbul</p>
+            <p>Studied Linux, robotics fundamentals, advanced physics, CERN's ROOT data-analysis framework, and the Geant4 particle-physics simulation toolkit.</p>
+          </div>
+          <div class="project-card">
+            <h4>Engineering Intern <span class="date">Jul-Aug 2025</span></h4>
+            <p class="org">GENSA Mühendislik Jeneratör San. Tic. Ltd. Şti., Başakşehir, Istanbul</p>
+            <p>Worked with stationary and mobile diesel generator systems from 3 kVA to 2000 kVA. Assisted with installation, maintenance, fault diagnosis, servicing, and observed synchronization-panel assembly and multi-unit load sharing.</p>
+          </div>
+          <div class="project-card">
+            <h4>Engineering Intern <span class="date">Jul-Aug 2024</span></h4>
+            <p class="org">Servo Kontrol Elektrikli Kontrol ve Tahrik Sistemleri, Otomasyon Ltd., Istanbul</p>
+            <p>Gained hands-on experience with Rexroth synchronous and asynchronous motors; developed diagnostic and troubleshooting skills for motor-drive systems.</p>
+          </div>
+        </div>
+
+        <!-- EDU / EDUCATION -->
+        <div id="edu" class="section-content">
+          <h2>EDUCATION</h2>
+          <div class="project-card">
+            <h4>M.Sc. in Nuclear Energy Engineering <span class="date">Jul 2026-Jun 2028</span></h4>
+            <p class="org">Istanbul Technical University, Istanbul</p>
+          </div>
+          <div class="project-card">
+            <h4>B.Sc. in Electrical and Electronics Engineering <span class="date">Sep 2022-Jul 2026</span></h4>
+            <p class="org">Istanbul Sabahattin Zaim University, Halkalı, Istanbul</p>
+            <p>Attended seminars on physics, technology, and AI; served on the RAS Committee of the IZU IEEE Student Branch. Studied C++, Linux, MATLAB, and the fundamentals of Qiskit and quantum computing.</p>
+          </div>
+          <div class="project-card">
+            <h4>High School Diploma <span class="date">Sep 2018-Jun 2022</span></h4>
+            <p class="org">Halkalı Okyanus College Anatolian High School, Istanbul</p>
+          </div>
+        </div>
+
+        <!-- EQUIP / PROJECTS -->
+        <div id="equip" class="section-content">
+          <h2>EQUIPPED PROJECTS</h2>
+          <div class="project-card">
+            <h4>ToT Discriminator Boards for Radiation Detectors <span class="date">2025-2026</span></h4>
+            <p>Graduation/senior project. Designed and fabricated an LVDS-based window-comparator and ToT discriminator PCB at İZÜ NAR. Presented at YEFİST (HEP Istanbul Workshop) 2026, demonstrating circuit stability and timing performance.</p>
+          </div>
+          <div class="project-card">
+            <h4>PlatformBot <span class="date">2024</span></h4>
+            <p>Robot capable of random navigation within a defined area, with an IMU-based, three-axis dynamic landing platform enabling a drone to land autonomously despite robot motion.</p>
+          </div>
+          <div class="project-card">
+            <h4>Absolute C-Nema <span class="date">2024</span></h4>
+            <p>Cross-platform cinema-management application built in C++ for Windows and Linux, developed for a computer-programming course.</p>
+          </div>
+          <div class="project-card">
+            <h4>My Limitless Holiday <span class="date">2018-2019</span></h4>
+            <p>MIT App Inventor application supporting inclusive holidays for people with disabilities. Placed top ten in the Social Sciences category at Üsküdar University's Science and Ideas Festival.</p>
+          </div>
+        </div>
+
+        <!-- QUESTS / ACHIEVEMENTS -->
+        <div id="quests" class="section-content">
+          <h2>ACHIEVEMENTS</h2>
+          <p>• YEFİST 2026 - HEP Istanbul Workshop: Local Organizing Committee member &amp; presenter (Jun 13-14, 2026)</p>
+          <p>• YEFİST 2025 - HEP Istanbul Workshop: Local Organizing Committee member</p>
+          <p>• YEFİST 2023 - HEP Istanbul Workshop: Participant</p>
+          <p>• Üsküdar University 7th Science and Ideas Festival Award (2019): Medal &amp; certificate for "My Limitless Holiday"</p>
+          <p>• RAS Committee member, IZU IEEE Student Branch</p>
+          <p>• Graduation Thesis Project on radiation-detector electronics</p>
+        </div>
+
+        <!-- SYSTEM / HOBBIES & CONTACT -->
+        <div id="system" class="section-content">
+          <h2>INTERESTS &amp; CONTACT</h2>
+          <p><strong>Hobbies:</strong> Video games, music &amp; musical instruments, reading, drawing</p>
+          <p><strong>Contact:</strong>
+            <a href="mailto:keskineromerkaan@gmail.com">keskineromerkaan@gmail.com</a> |
+            <a href="https://github.com/pisanzapra" target="_blank" rel="noopener">GitHub</a> |
+            <a href="https://linkedin.com/in/omer-kaan-keskiner" target="_blank" rel="noopener">LinkedIn</a> |
+            <a href="#" target="_blank" rel="noopener">Website</a> |
+            <a href="https://okaankeskiner.blogger.com" target="_blank" rel="noopener">Blogger</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBSCRIPTION -->
+  <div id="screen-subscription" class="screen">
+    <button class="back-btn" onclick="showScreen('main')">◀ MENU</button>
+    <div class="subscription-box">
+      <h2>SUBSCRIPTION</h2>
+      <p>If you want to know more about me in person, please subscribe monthly for more and be my only fan. 😉</p>
+      <button class="fake-subscribe-btn">Subscribe:  ₺97.000/month</button>
+      <p class="exes-note">...or, for a more "detailed" review, feel free to contact one of my exes.</p>
+    </div>
+  </div>
+
+  <!-- QUIT -->
+  <div id="screen-quit" class="screen">
+    <div class="quit-box">
+      <h2>ARE YOU SURE?</h2>
+      <p id="quit-message">Wait... Are you leaving already? :(( </p>
+      <div class="quit-buttons">
+        <button class="btn-troll-yes" onclick="attemptQuit()">YES, QUIT</button>
+        <button onclick="showScreen('main')">NO, STAY</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
