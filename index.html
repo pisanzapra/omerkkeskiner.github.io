@@ -4,22 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ömer Kaan Keskiner | CV & Portfolio</title>
+  <link rel="icon" type="image/png" href="figures/freehand-crop.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div id="track-info" class="track-info"></div>
-  <button id="audio-toggle" class="audio-toggle" onclick="toggleAudio()" aria-label="Müziği aç/kapat">🔇</button>
+  <button id="audio-toggle" class="audio-toggle" onclick="toggleAudio()" aria-label="Müziği aç/kapat">🔊</button>
+  <!--
+    NOT: "autoplay" özelliği kasıtlı olarak kaldırıldı. O özellik varken
+    tarayıcı, her sekme değişiminde şarkı kaynağı (src) değiştiğinde kendi
+    kendine tekrar çalmaya çalışıyordu; bu da kullanıcı sesi kapatsa bile
+    bir sonraki sekmede sesin kendiliğinden açılmasına yol açıyordu.
+    İlk açılışta sesi başlatma işini script.js zaten kendi mantığıyla
+    (applyTheme + ilk tıklamada devreye giren dinleyici) yapıyor.
+  -->
   <audio id="bgm" loop></audio>
 
-  <!-- ANA MENÜ -->
+  <!-- TAM EKRAN SERTİFİKA GÖRÜNTÜLEYİCİ (MODAL) -->
+  <div id="cert-modal" class="modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="Certificate">
+  </div>
+
+  <!-- ANA MENÜ (VELVET ROOM) -->
   <div id="screen-main" class="screen active">
-    <div class="main-menu-stage">
-      <div class="main-menu-buttons">
-        <button class="main-menu-item" onclick="showScreen('gtk')">GET TO KNOW ME</button>
-        <button class="main-menu-item" onclick="showScreen('subscription')">SUBSCRIPTION</button>
-        <button class="main-menu-item" onclick="showScreen('quit')">QUIT</button>
+    <div class="velvet-overlay"></div>
+
+    <!-- P5 Tarzı Seçenekler -->
+    <div class="p5-choices-container" id="p5-choices">
+      <div class="choice-wrapper">
+        <button class="p5-choice-btn" onclick="selectChoice('gtk', event)">
+          <span class="p5-choice-text">I want to learn about him</span>
+        </button>
       </div>
+      <div class="choice-wrapper">
+        <button class="p5-choice-btn" onclick="selectChoice('subscription', event)">
+          <span class="p5-choice-text">Can I subscribe to him?</span>
+        </button>
+      </div>
+      <div class="choice-wrapper">
+        <button class="p5-choice-btn" onclick="selectChoice('quit', event)">
+          <span class="p5-choice-text">I want to exit</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Igor ve Konuşma Balonu -->
+    <!--
+      NOT: Konuşmalar artık hazır PNG görselleri (karakter + balon + yazı
+      tek karede) ile gösteriliyor. Görselleri kaldırıp eski metin/CSS
+      tabanlı balona dönmek istersen, aşağıdaki eski yapıyı geri getirebilirsin:
+
+      <div class="dialogue-section">
+        <img src="figures/Igor.png" alt="Igor" class="igor-portrait">
+        <div class="p5-dialogue-box" id="igor-dialogue-box" onclick="showChoices()">
+          <div class="speaker-name">Igor</div>
+          <p class="dialogue-text" id="igor-text">Welcome to Ömer’s page... <span class="blink-arrow">▼</span></p>
+        </div>
+      </div>
+
+      Eski istekler (görsellere geçince uygulanamadı, metne dönersen hatırlatma):
+      - Igor'un isim etiketi kırmızı değil MAVİ olmalı (.speaker-name rengi)
+      - "Welcome back" mantığı: script.js içindeki resetDialogue() zaten
+        hasLeftMainScreen bayrağına göre "welcome" / "welcome back" görselini
+        seçiyor; metne dönersen aynı mantıkla igor-text içeriğini değiştir.
+    -->
+    <div class="dialogue-section">
+      <img id="igor-scene" class="dialogue-scene" src="speech/igor-welcome.png" alt="Igor" onclick="showChoices()">
     </div>
   </div>
 
@@ -27,16 +78,15 @@
   <div id="screen-gtk" class="screen">
     <button class="back-btn" onclick="showScreen('main')">◀ MENU</button>
     
-    <!-- Sol Alt Avatar ve Etkileşimli Menü (Artık CSS ile Ekrana Sabit) -->
     <div class="menu-container">
-      <img src="freehand-crop.png" alt="Avatar" class="avatar-img">
+      <img src="figures/freehand-crop.png" alt="Avatar" class="avatar-img">
       <nav class="persona-menu">
-        <button class="menu-item" onclick="showSection('stats')"><span class="text">STATS</span></button>
-        <button class="menu-item" onclick="showSection('work')"><span class="text">WORK</span></button>
-        <button class="menu-item" onclick="showSection('edu')"><span class="text">EDU</span></button>
-        <button class="menu-item" onclick="showSection('equip')"><span class="text">EQUIP</span></button>
-        <button class="menu-item" onclick="showSection('quests')"><span class="text">QUESTS</span></button>
-        <button class="menu-item" onclick="showSection('system')"><span class="text">SYSTEM</span></button>
+        <button class="menu-item" onclick="showSection('stats')"><span class="text">ST<span class="inverted-letter">A</span>TS</span></button>
+        <button class="menu-item" onclick="showSection('work')"><span class="text"><span class="inverted-letter">W</span>ORK</span></button>
+        <button class="menu-item" onclick="showSection('edu')"><span class="text">E<span class="inverted-letter">D</span>U</span></button>
+        <button class="menu-item" onclick="showSection('equip')"><span class="text">EQ<span class="inverted-letter">U</span>IP</span></button>
+        <button class="menu-item" onclick="showSection('quests')"><span class="text">Q<span class="inverted-letter">U</span>ESTS</span></button>
+        <button class="menu-item" onclick="showSection('system')"><span class="text">SYS<span class="inverted-letter">T</span>EM</span></button>
       </nav>
     </div>
 
@@ -47,23 +97,23 @@
         <!-- STATS / ABOUT -->
         <div id="stats" class="section-content active">
           <div class="stats-logos">
-            <img class="uni-logo" src="itu-logo.png" alt="İTÜ logo">
-            <img class="uni-logo" src="izunar-logo.png" alt="İZÜ NAR logo">
+            <img class="uni-logo" src="figures/itu-logo.png" alt="İTÜ logo">
+            <img class="uni-logo" src="figures/izunar-logo.png" alt="İZÜ NAR logo">
           </div>
           <div class="stats-header">
-            <img class="portrait" src="profile.jpg" alt="Ömer Kaan Keskiner">
+            <img class="portrait" src="figures/profile.jpg" alt="Ömer Kaan Keskiner">
             <div>
               <h2>CHARACTER STATS</h2>
               <p><strong>Name:</strong> Ömer Kaan Keskiner</p>
-              <p><strong>Role:</strong> Guest Researcher @ İZÜ NAR</p>
-              <p><strong>Class:</strong> M.Sc. Student, Nuclear Energy Engineering</p>
+              <p><strong>Role:</strong> Guest Researcher at IZU NAR</p>
+              <p><strong>Education:</strong> M.Sc. Student, Nuclear Energy Engineering at ITU </p>
             </div>
           </div>
           <hr>
           <h3>SKILLS</h3>
           <ul class="skills-list">
             <li><strong>Electronics:</strong> KiCad schematic &amp; PCB design, detector electronics, analog/digital circuit design, soldering</li>
-            <li><strong>Instrumentation:</strong> LVDS window-comparator &amp; Time-over-Threshold (ToT) discriminator design for radiation detectors</li>
+            <li><strong>Instrumentation:</strong> LVDS window-comparator &amp; Time-over-Threshold discriminator design for radiation detectors</li>
             <li><strong>Programming:</strong> C, C++, MATLAB, LaTeX, Linux</li>
             <li><strong>Scientific Tools:</strong> ROOT, Geant4, Qiskit fundamentals</li>
             <li><strong>Prototyping:</strong> Robotics, 3D printing, electronics integration</li>
@@ -82,7 +132,7 @@
           <div class="project-card">
             <h4>Part-Time Student Researcher <span class="date">Feb 2024-Jul 2026</span></h4>
             <p class="org">İZÜ NAR, Istanbul</p>
-            <p>Worked at the intersection of nuclear electronics, particle physics, and robotics. Designed KiCad schematics and PCBs, fabricated boards, and used MATLAB simulations to turn concepts into prototypes. Designed and implemented LVDS-based window-comparator and ToT discriminator PCBs for radiation detectors. Contributed to robotics design, 3D printing, electronics integration, and lab management.</p>
+            <p>Worked at the intersection of nuclear electronics, particle physics, and robotics. Designed KiCad schematics and PCBs, fabricated boards, and used MATLAB simulations to turn concepts into prototypes.</p>
           </div>
           <div class="project-card">
             <h4>Volunteer Intern <span class="date">Jul 2023-Feb 2024</span></h4>
@@ -92,12 +142,12 @@
           <div class="project-card">
             <h4>Engineering Intern <span class="date">Jul-Aug 2025</span></h4>
             <p class="org">GENSA Mühendislik Jeneratör San. Tic. Ltd. Şti., Başakşehir, Istanbul</p>
-            <p>Worked with stationary and mobile diesel generator systems from 3 kVA to 2000 kVA. Assisted with installation, maintenance, fault diagnosis, servicing, and observed synchronization-panel assembly and multi-unit load sharing.</p>
+            <p>Worked with stationary and mobile diesel generator systems from 3 kVA to 2000 kVA.</p>
           </div>
           <div class="project-card">
             <h4>Engineering Intern <span class="date">Jul-Aug 2024</span></h4>
             <p class="org">Servo Kontrol Elektrikli Kontrol ve Tahrik Sistemleri, Otomasyon Ltd., Istanbul</p>
-            <p>Gained hands-on experience with Rexroth synchronous and asynchronous motors; developed diagnostic and troubleshooting skills for motor-drive systems.</p>
+            <p>Gained hands-on experience with Rexroth synchronous and asynchronous motors.</p>
           </div>
         </div>
 
@@ -111,7 +161,7 @@
           <div class="project-card">
             <h4>B.Sc. in Electrical and Electronics Engineering <span class="date">Sep 2022-Jul 2026</span></h4>
             <p class="org">Istanbul Sabahattin Zaim University, Halkalı, Istanbul</p>
-            <p>Attended seminars on physics, technology, and AI; served on the RAS Committee of the IZU IEEE Student Branch. Studied C++, Linux, MATLAB, and the fundamentals of Qiskit and quantum computing.</p>
+            <p>Attended seminars on physics, technology, and AI; served on the RAS Committee of the IZU IEEE Student Branch.</p>
           </div>
           <div class="project-card">
             <h4>High School Diploma <span class="date">Sep 2018-Jun 2022</span></h4>
@@ -124,43 +174,70 @@
           <h2>EQUIPPED PROJECTS</h2>
           <div class="project-card">
             <h4>ToT Discriminator Boards for Radiation Detectors <span class="date">2025-2026</span></h4>
-            <p>Graduation/senior project. Designed and fabricated an LVDS-based window-comparator and ToT discriminator PCB at İZÜ NAR. Presented at YEFİST (HEP Istanbul Workshop) 2026, demonstrating circuit stability and timing performance.</p>
+            <p>Graduation/senior project. Designed and fabricated an LVDS-based window-comparator and ToT discriminator PCB at İZÜ NAR.</p>
           </div>
           <div class="project-card">
             <h4>PlatformBot <span class="date">2024</span></h4>
-            <p>Robot capable of random navigation within a defined area, with an IMU-based, three-axis dynamic landing platform enabling a drone to land autonomously despite robot motion.</p>
+            <p>Robot capable of random navigation within a defined area, with an IMU-based, three-axis dynamic landing platform.</p>
           </div>
           <div class="project-card">
             <h4>Absolute C-Nema <span class="date">2024</span></h4>
-            <p>Cross-platform cinema-management application built in C++ for Windows and Linux, developed for a computer-programming course.</p>
+            <p>Cross-platform cinema-management application built in C++ for Windows and Linux.</p>
           </div>
           <div class="project-card">
             <h4>My Limitless Holiday <span class="date">2018-2019</span></h4>
-            <p>MIT App Inventor application supporting inclusive holidays for people with disabilities. Placed top ten in the Social Sciences category at Üsküdar University's Science and Ideas Festival.</p>
+            <p>MIT App Inventor application supporting inclusive holidays for people with disabilities.</p>
           </div>
         </div>
 
-        <!-- QUESTS / ACHIEVEMENTS -->
+        <!-- QUESTS (ACHIEVEMENTS & CERTS) -->
         <div id="quests" class="section-content">
-          <h2>ACHIEVEMENTS</h2>
-          <p>• YEFİST 2026 - HEP Istanbul Workshop: Local Organizing Committee member &amp; presenter (Jun 13-14, 2026)</p>
-          <p>• YEFİST 2025 - HEP Istanbul Workshop: Local Organizing Committee member</p>
-          <p>• YEFİST 2023 - HEP Istanbul Workshop: Participant</p>
-          <p>• Üsküdar University 7th Science and Ideas Festival Award (2019): Medal &amp; certificate for "My Limitless Holiday"</p>
-          <p>• RAS Committee member, IZU IEEE Student Branch</p>
-          <p>• Graduation Thesis Project on radiation-detector electronics</p>
+          <div class="quest-card">
+            <div class="quest-card-inner">
+              <!-- KARTIN ÖN YÜZÜ: ACHIEVEMENTS -->
+              <div class="quest-card-front">
+                <div class="card-header-flex">
+                  <h2>ACHIEVEMENTS</h2>
+                  <button class="flip-btn" onclick="flipCard()">SHOW CERTIFICATES ➔</button>
+                </div>
+                <p>• YEFİST 2026 - HEP Istanbul Workshop: Local Organizing Committee member &amp; presenter (Jun 13-14, 2026)</p>
+                <p>• YEFİST 2025 - HEP Istanbul Workshop: Local Organizing Committee member</p>
+                <p>• YEFİST 2023 - HEP Istanbul Workshop: Participant</p>
+                <p>• Üsküdar University 7th Science and Ideas Festival Award (2019): Medal &amp; certificate for "My Limitless Holiday"</p>
+                <p>• RAS Committee member, IZU IEEE Student Branch</p>
+                <p>• Graduation Thesis Project on radiation-detector electronics</p>
+              </div>
+              <!-- KARTIN ARKA YÜZÜ: CERTIFICATES -->
+              <div class="quest-card-back">
+                <div class="card-header-flex">
+                  <h2>CERTIFICATES</h2>
+                  <button class="flip-btn" onclick="flipCard()">⬅ SHOW ACHIEVEMENTS</button>
+                </div>
+                <div class="cert-grid">
+                  <img class="cert-thumb" src="certs/isu_parcacik-calistay.jpg" onclick="openModal('certs/isu_parcacik-calistay.jpg')" alt="İstinye Univ. Particle Physics Workshop 2023">
+                  <img class="cert-thumb" src="certs/omun-attendance.png" onclick="openModal('certs/omun-attendance.png')" alt="O'MUN Attendance">
+                  <img class="cert-thumb" src="certs/tubitak_bargem.jpg" onclick="openModal('certs/tubitak_bargem.jpg')" alt="TUBITAK BARGEM">
+                  <img class="cert-thumb" src="certs/uu_bff.jpg" onclick="openModal('certs/uu_bff.jpg')" alt="Uskudar Univ. 7th Science and Ideas Festival">
+                  <img class="cert-thumb" src="certs/yefist25.jpg" onclick="openModal('certs/yefist25.jpg')" alt="HEP Istanbul Workshop 25">
+		              <img class="cert-thumb" src="certs/yefist26.jpg" onclick="openModal('certs/yefist26.jpg')" alt="HEP Istanbul Workshop 26">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- SYSTEM / HOBBIES & CONTACT -->
         <div id="system" class="section-content">
           <h2>INTERESTS &amp; CONTACT</h2>
           <p><strong>Hobbies:</strong> Video games, music &amp; musical instruments, reading, drawing</p>
-          <p><strong>Contact:</strong>
+	        <p><strong>Music:</strong> King Crimson, TOOL, Dream Theater, The Strokes, Yes, Porcupine Tree, Rush, Bowie</p>
+	        <p><strong>Instruments:</strong> Drums, Electric Guitar, Classical Guitar, Bass</p>
+	        <p><strong>Contact:</strong>
             <a href="mailto:keskineromerkaan@gmail.com">keskineromerkaan@gmail.com</a> |
             <a href="https://github.com/pisanzapra" target="_blank" rel="noopener">GitHub</a> |
             <a href="https://linkedin.com/in/omer-kaan-keskiner" target="_blank" rel="noopener">LinkedIn</a> |
             <a href="#" target="_blank" rel="noopener">Website</a> |
-            <a href="https://okaankeskiner.blogger.com" target="_blank" rel="noopener">Blogger</a>
+            <a href="https://okaankeskiner.blogspot.com/" target="_blank" rel="noopener">Blogger</a>
           </p>
         </div>
 
@@ -169,12 +246,28 @@
   </div>
 
   <!-- SUBSCRIPTION -->
+  <!--
+    NOT: Ömer'in konuşması da artık hazır PNG (karakter+balon+yazı) ile
+    gösteriliyor, tıklayınca 2. göreve (subscribe pitch) geçiyor. Eski
+    metin/CSS tabanlı balona dönmek istersen:
+
+    <div class="subscription-dialogue">
+      <img src="speech/omer_speech.png" alt="Ömer Kaan Keskiner" class="subscription-avatar">
+      <div class="subscription-bubble">
+        <div class="speaker-name">Ömer Kaan</div>
+        <p>If you want to know more about me in person, please subscribe monthly for more and be my only fan. 😉</p>
+        <button class="fake-subscribe-btn">Subscribe: ₺97.000/month</button>
+        <p class="exes-note">...or, for a more "detailed" review, feel free to contact one of my exes.</p>
+      </div>
+    </div>
+  -->
   <div id="screen-subscription" class="screen">
     <button class="back-btn" onclick="showScreen('main')">◀ MENU</button>
-    <div class="subscription-box">
-      <h2>SUBSCRIPTION</h2>
-      <p>If you want to know more about me in person, please subscribe monthly for more and be my only fan. 😉</p>
-      <button class="fake-subscribe-btn">Subscribe:  ₺97.000/month</button>
+    <div class="subscription-dialogue">
+      <img id="omer-scene" class="dialogue-scene" src="speech/omer-hello.png" alt="Ömer Kaan Keskiner" onclick="advanceOmerDialogue()">
+    </div>
+    <div id="subscribe-actions" class="subscribe-actions">
+      <button class="fake-subscribe-btn">Subscribe: ₺97.000/month</button>
       <p class="exes-note">...or, for a more "detailed" review, feel free to contact one of my exes.</p>
     </div>
   </div>
@@ -185,7 +278,9 @@
       <h2>ARE YOU SURE?</h2>
       <p id="quit-message">Wait... Are you leaving already? :(( </p>
       <div class="quit-buttons">
-        <button class="btn-troll-yes" onclick="attemptQuit()">YES, QUIT</button>
+        <div class="quit-yes-wrap">
+          <button class="btn-troll-yes" onclick="attemptQuit()">YES, QUIT</button>
+        </div>
         <button onclick="showScreen('main')">NO, STAY</button>
       </div>
     </div>
